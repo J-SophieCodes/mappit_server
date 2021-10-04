@@ -1,11 +1,14 @@
+require("dotenv").config();
+
 const express = require('express');
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const Property = require('./models/property')
-require("dotenv").config();
 
-const PORT = process.env.PORT;
+const routes = require('./routes/api');
+const HttpError = require('./models/httpError');
+
+const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.DB)
@@ -18,32 +21,17 @@ mongoose.Promise = global.Promise;
 
 app.use(cors());
 
-app.get('/properties', (request, response) => {
-  Property.find({}).then(properties => {
-    response.json(properties);
-  });
+app.use('/api', routes);
+
+app.use((req, res, next) => {
+  const error = new HttpError("Could not find this route.", 404);
+  throw error;
 });
 
-app.get('/properties/:id', (request, response) => {
-  Property.findById(request.params.id)
-    .then(property => {
-      if (property) {
-        response.json(property);
-      } else {
-        response.status(404).end();  // resource not found
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      response.status(400).send({ error: 'malformatted id' })  // invalid id format
-    })
-});
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' });
-};
-
-app.use(unknownEndpoint);  // handling unknown endpoint
+app.use((err, req, res, next) => {
+  res.status(err.code || 500);
+  res.json({ error: err.message || "An unknown error has occurred." });
+})
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
