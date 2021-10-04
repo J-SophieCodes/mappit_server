@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const Property = require('./models/property')
 require("dotenv").config();
@@ -14,6 +15,8 @@ mongoose
   });
 
 mongoose.Promise = global.Promise;
+
+app.use(cors());
 
 app.get('/properties', (request, response) => {
   Property.find({}).then(properties => {
