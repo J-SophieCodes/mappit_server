@@ -23,6 +23,8 @@ app.use(cors());
 
 app.use('/api', routes);
 
+app.use(express.static('build'));
+
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
   throw error;
