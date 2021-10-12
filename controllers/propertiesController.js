@@ -7,6 +7,17 @@ const getProperties = (req, res, next) => {
     });
 };
 
+const getPropertiesByCity = (req, res, next) => {
+  let city = req.params.city;
+
+  Property.find({ city })
+    .then(properties => {
+      res.json(properties);
+    });
+
+}
+
 module.exports = {
-  getProperties
+  getProperties,
+  getPropertiesByCity
 };
