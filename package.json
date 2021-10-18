@@ -1,5 +1,5 @@
 {
-  "name": "naborly_server",
+  "name": "mappit_server",
   "version": "1.0.0",
   "description": "server",
   "main": "index.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/J-SophieCodes/naborly_server.git"
+    "url": "git+https://github.com/J-SophieCodes/mappit_server.git"
   },
   "author": "Sophie Chan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/J-SophieCodes/naborly_server/issues"
+    "url": "https://github.com/J-SophieCodes/mappit_server/issues"
   },
-  "homepage": "https://github.com/J-SophieCodes/naborly_server#readme",
+  "homepage": "https://github.com/J-SophieCodes/mappit_server#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
